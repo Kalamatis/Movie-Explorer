@@ -1,59 +1,79 @@
+import { imdbErrorHandler } from "./errorHandler.js";
+
 // FilterWindow back Button
 const fwbackButton = document.querySelector(".fwback-button");
 const FilterWindow = document.querySelector(".filterWindow");
 const fmContainer = document.querySelector("#fwbody");
+const searchForms = document.querySelectorAll(".formInput");
+const movieType = document.querySelector("#movie-type");
 
 fwbackButton.addEventListener("click", () => {
   FilterWindow.style.display = "none";
 });
+document.querySelector("#showFW").addEventListener("click", () => {
+  showFW();
+});
+
 function showFW() {
   FilterWindow.style.display = "block";
 }
 
-async function fetchMovie(title) {
+async function fetchMovie(input, type) {
+  let isID = isIDmethod(input);
+
   loadingScreen(fmContainer);
 
   try {
     const apiKey = "3559942e";
-    const response = await fetch(
-      `http://www.omdbapi.com/?apikey=${apiKey}&s=${title}`
-    );
-
-    if (response.Response === "False")
-      throw new error("Failed to collect resources");
-
+    let response;
+    if (isID) {
+      response = await fetch(
+        `http://www.omdbapi.com/?apikey=${apiKey}&i=${input}&type=${type}`
+      );
+    } else {
+      response = await fetch(
+        `http://www.omdbapi.com/?apikey=${apiKey}&s=${input}&type=${type}`
+      );
+    }
     const data = await response.json();
-    dataHandler(data);
+    console.log(data);
+    imdbErrorHandler(data);
   } catch (error) {
     console.log(error);
   }
 }
 
-function dataHandler(data) {
-  if (data.Error !== "Movie not found!") displayMovies(data);
-  else fmContainer.innerHTML = `Movie not Found!`;
+//This will verify if the input is ID,
+//if the input starts with 'tt' and the rest is number, it returns
+function isIDmethod(input) {
+  const id =
+    input.slice(0, 2) === "tt" && !isNaN(Number(input.slice(2))) ? true : false;
+  return id;
 }
 
-const searchForms = document.querySelectorAll(".formInput");
-const filterWindow = document.querySelector(".filterWindow");
-
+//Forms input
 searchForms.forEach((form) => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
     const searchInput = document.querySelector(".search-title").value.trim();
     const fwsearchInput = document
       .querySelector(".fwsearch-title")
       .value.trim();
 
-    if (searchInput !== "") fetchMovie(searchInput);
-    else if (fwsearchInput !== "") fetchMovie(fwsearchInput);
-
-    searchInput.value = "";
-    fwsearchInput.value = "";
+    if (searchInput !== "") {
+      fetchMovie(searchInput, movieType.value);
+      document.querySelector(".search-title").value = "";
+      movieType.value = "";
+    } else if (fwsearchInput !== "") {
+      fetchMovie(fwsearchInput, movieType.value);
+      document.querySelector(".fwsearch-title").value = "";
+      movieType.value = "";
+    }
   });
 });
 
-function displayMovies(movies) {
+export function displayMovies(movies) {
   fmContainer.innerHTML = "";
   movies.Search.forEach((movie) => {
     const title = movie.Title;

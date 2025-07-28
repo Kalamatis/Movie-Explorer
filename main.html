@@ -20,7 +20,7 @@
             placeholder="Search a movie"
           />
         </form>
-        <button onclick="showFW()"></button>
+        <button id="showFW"></button>
       </div>
 
       <div id="recoContainer">
@@ -42,35 +42,11 @@
             </form>
           </div>
           <div class="fwddmenu">
-            <select name="genre" id="genre-select">
-              <option value="">Genre</option>
-              <option value="Action">Action</option>
-              <option value="Adventure">Adventure</option>
-              <option value="Animation">Animation</option>
-              <option value="Biography">Biography</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Crime">Crime</option>
-              <option value="Documentary">Documentary</option>
-              <option value="Drama">Drama</option>
-              <option value="Family">Family</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="History">History</option>
-              <option value="Horror">Horror</option>
-              <option value="Music">Music</option>
-              <option value="Musical">Musical</option>
-              <option value="Mystery">Mystery</option>
-              <option value="Romance">Romance</option>
-              <option value="Sci-Fi">Sci-Fi</option>
-              <option value="Sport">Sport</option>
-              <option value="Thriller">Thriller</option>
-              <option value="War">War</option>
-              <option value="Western">Western</option>
-            </select>
-            <select name="type" id="movie-series">
-              <option value="type">Type</option>
+            <select name="type" id="movie-type">
+              <option value="">Type</option>
               <option value="movie">Movie</option>
               <option value="series">Series</option>
-              <option value="short">Short</option>
+              <option value="episode">Episode</option>
             </select>
           </div>
           <button class="fwback-button"></button>
@@ -79,6 +55,9 @@
       </div>
     </div>
     <script src="/Movie Explorer/assets/script/main.js"></script>
-    <script src="/Movie Explorer/assets/script/filterWindow.js"></script>
+    <script
+      type="module"
+      src="/Movie Explorer/assets/script/filterWindow.js"
+    ></script>
   </body>
 </html>
