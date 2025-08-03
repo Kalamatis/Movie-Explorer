@@ -6,7 +6,11 @@ export function imdbErrorHandler(data) {
 
   fmContainer.innerHTML = ``;
 
-  if (errorCode === "Movie not found!" || errorCode === "Incorrect IMDb ID.") {
+  if (
+    errorCode === "Movie not found!" ||
+    errorCode === "Incorrect IMDb ID." ||
+    errorCode === "Series not found!"
+  ) {
     fmContainer.innerHTML = `No movie found.`;
   } else if (errorCode === "Request limit reached!") {
     fmContainer.innerHTML = `Limit reached.`;
@@ -22,4 +26,9 @@ export function imdbErrorHandler(data) {
     fmContainer.innerHTML = `Something went wrong.
 `;
   } else displayMovies(data);
+}
+
+export function showMovieErrorHandler(data) {
+  if (data.Error === "Incorrect IMDb ID.") {
+  }
 }

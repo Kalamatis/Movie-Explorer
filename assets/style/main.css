@@ -1,6 +1,9 @@
 body {
   background-color: #4d0000;
   background-image: linear-gradient(to bottom right, #4d0000, #2e2c2b);
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 .SContainer {
@@ -60,12 +63,14 @@ body {
 }
 .Recommendations {
   color: white;
-  padding-left: 18px;
-  margin: auto;
+  padding-left: 10px;
 }
-.Recommendations li {
-  margin: 3px;
-  width: fit-content;
+.recoTitles {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 3px;
+  width: 150px;
 }
 .Recommendations li:hover {
   cursor: pointer;

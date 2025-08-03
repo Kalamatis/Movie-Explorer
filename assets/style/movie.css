@@ -1,0 +1,100 @@
+/* #smParentContainer {
+  display: flex;
+  flex-direction: row;
+  background: green;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  width: 100%;
+  color: black;
+}
+
+#smimg {
+  display: inline;
+  height: 300px;
+  margin-right: 10px;
+}
+#smcontents {
+  background-color: pink;
+  display: block;
+  height: 300px;
+  width: 400px;
+}
+#smid {
+  height: 30px;
+  width: 100%;
+}
+#smtype {
+  height: 30px;
+  width: 100%;
+}
+#smyear {
+  height: 30px;
+  width: 100%;
+}
+#smplot {
+  height: 100px;
+  width: 100%;
+} */
+
+#smParentContainer {
+  display: none;
+  position: absolute;
+  max-width: 800px;
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  font-family: "Segoe UI", sans-serif;
+  transition: all 0.5s;
+}
+#smbbuton {
+  position: absolute;
+  display: block;
+  margin-left: 90%;
+  background-color: transparent;
+  height: 30px;
+  width: 10%;
+  border-bottom-left-radius: 10px;
+  border-bottom: 2px solid #999;
+  border-left: 2px solid #999;
+  transition: all 0.2s;
+}
+#smimg {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+}
+
+.movie-info {
+  padding: 20px;
+  flex: 1;
+}
+
+.movie-info h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  color: #ffd700;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-bottom: 10px;
+}
+
+.plot {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.details p {
+  margin: 4px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

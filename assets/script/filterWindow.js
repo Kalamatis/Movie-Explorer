@@ -1,4 +1,4 @@
-import { imdbErrorHandler } from "./errorHandler.js";
+import { fetchMovie } from "./dataManager.js";
 
 // FilterWindow back Button
 const fwbackButton = document.querySelector(".fwback-button");
@@ -17,76 +17,41 @@ document.querySelector("#showFW").addEventListener("click", () => {
 function showFW() {
   FilterWindow.style.display = "block";
 }
-
-async function fetchMovie(input, type) {
-  let isID = isIDmethod(input);
-
-  loadingScreen(fmContainer);
-
-  try {
-    const apiKey = "3559942e";
-    let response;
-    if (isID) {
-      response = await fetch(
-        `http://www.omdbapi.com/?apikey=${apiKey}&i=${input}&type=${type}`
-      );
-    } else {
-      response = await fetch(
-        `http://www.omdbapi.com/?apikey=${apiKey}&s=${input}&type=${type}`
-      );
-    }
-    const data = await response.json();
-    console.log(data);
-    imdbErrorHandler(data);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-//This will verify if the input is ID,
-//if the input starts with 'tt' and the rest is number, it returns
-function isIDmethod(input) {
-  const id =
-    input.slice(0, 2) === "tt" && !isNaN(Number(input.slice(2))) ? true : false;
-  return id;
+function closeFW() {
+  FilterWindow.style.display = "none";
 }
 
 //Forms input
 searchForms.forEach((form) => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    const searchInput = document.querySelector(".search-title").value.trim();
-    const fwsearchInput = document
-      .querySelector(".fwsearch-title")
-      .value.trim();
-
-    if (searchInput !== "") {
-      fetchMovie(searchInput, movieType.value);
-      document.querySelector(".search-title").value = "";
-      movieType.value = "";
-    } else if (fwsearchInput !== "") {
-      fetchMovie(fwsearchInput, movieType.value);
-      document.querySelector(".fwsearch-title").value = "";
-      movieType.value = "";
-    }
+    submission();
   });
+});
+
+// Makes the input regain focus after using
+movieType.addEventListener("change", (e) => {
+  submission();
 });
 
 export function displayMovies(movies) {
   fmContainer.innerHTML = "";
+  if (movies.length === 1) {
+    showMovie(movies);
+    return;
+  }
+
   movies.Search.forEach((movie) => {
     const title = movie.Title;
     const poster = movie.Poster;
     const year = movie.Year;
     const type = movie.Type;
+    const id = movie.imdbID || movie.imdbid;
 
-    console.log(poster);
     fmContainer.innerHTML += `
-    <div class="fmcontainer">
-      <img src="${poster}"
-            alt="No image found"
-            class="fmimage"
+    <div class="fmcontainer" >
+      <img src="${poster}" class="fmimage" data-id="${id}"
+            onerror="this.onerror=null; this.src='/Movie Explorer/assets/icons/no-image.png';"; 
           />
           <div class="fmtrContainer">
             <h6>${year}</h6>
@@ -96,16 +61,47 @@ export function displayMovies(movies) {
       </div>
   `;
   });
-
+  fmcEvents();
   showFW();
 }
 
-function loadingScreen(div) {
-  div.innerHTML = `
+export function loadMovies(input, type) {
+  fetchMovie(input, type);
+}
+
+export function loadingScreen() {
+  fmContainer.innerHTML = `
   <div class="loadingBoxes"><div class="LBDS"></div></div>
   <div class="loadingBoxes"><div class="LBDS"></div></div>
   <div class="loadingBoxes"><div class="LBDS"></div></div>
   <div class="loadingBoxes"><div class="LBDS"></div></div>
   <div class="loadingBoxes"><div class="LBDS"></div></div>
 `;
+}
+
+function submission() {
+  const searchInput = document.querySelector(".search-title").value.trim();
+  const fwsearchInput = document.querySelector(".fwsearch-title").value.trim();
+
+  if (searchInput !== "") {
+    fetchMovie(searchInput, movieType.value);
+    document.querySelector(".search-title").value = "";
+    movieType.value = "";
+  } else if (fwsearchInput !== "") {
+    fetchMovie(fwsearchInput, movieType.value);
+    document.querySelector(".fwsearch-title").value = "";
+    movieType.value = "";
+  }
+}
+
+function fmcEvents() {
+  const fmsContainer = document.querySelectorAll(".fmimage");
+
+  fmsContainer.forEach((fmc) => {
+    fmc.addEventListener("click", (e) => {
+      closeFW();
+      const id = fmc.getAttribute("data-id");
+      fetchMovie(id);
+    });
+  });
 }

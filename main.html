@@ -6,7 +6,11 @@
     <title>Document</title>
     <link rel="stylesheet" href="assets/style/main.css" />
     <link rel="stylesheet" href="assets/style/filter-window.css" />
-  </head>
+    <link rel="stylesheet" href="assets/style/movie.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
   <body>
     <div class="SContainer">
       <div class="Title">
@@ -22,17 +26,13 @@
         </form>
         <button id="showFW"></button>
       </div>
-
       <div id="recoContainer">
-        <span class="nameReco">Recommendations:</span>
-        <ul class="Recommendations rar">
-          <li>Whatdahelly</li>
-          <li>What?</li>
-          <li>What?</li>
-        </ul>
+        <div class="nameReco">Recommendations:</div>
+        <ul class="Recommendations rar"></ul>
         <span class="seemore rar">See more...</span>
       </div>
 
+      <!-- Filter Window -->
       <div class="filterWindow">
         <div class="fwheader fww">
           <div class="fwsearch-bar fwc">
@@ -53,8 +53,19 @@
         </div>
         <div id="fwbody"></div>
       </div>
+
+      <!-- This is for the movie info -->
+      <div id="smParentContainer">
+        <button id="smbbuton"><img src="./assets/icons/arrow-back.png" alt=""></button>
+        <img src="" onerror="this.onerror=null; this.src='/Movie Explorer/assets/icons/no-image.png';" id="smimg">
+        <div class="movie-info">
+        <h2></h2>
+        <p class="meta"></p>
+        <p class="plot"></p>
+        <div class="details"></div>
+      </div>
     </div>
-    <script src="/Movie Explorer/assets/script/main.js"></script>
+    <script type="module" src="/Movie Explorer/assets/script/main.js"></script>
     <script
       type="module"
       src="/Movie Explorer/assets/script/filterWindow.js"
